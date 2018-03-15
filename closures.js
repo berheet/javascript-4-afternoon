@@ -10,34 +10,32 @@
 
 // Do not edit the code below.
 function outer() {
-  var name = 'Tyler';
+  var name = "Tyler";
   return function() {
-    return 'The original name was ' + name;
+    return "The original name was " + name;
   };
 }
 // Do not edit the code above.
-  
+
 /* 
   Above you're given a function that returns another function which has a closure over the name variable.
   Invoke outer saving the return value into another variable called 'inner'.
 */
-  
+
 // Code Here
-
-
+const inner = outer();
 
 //Once you do that, invoke inner.
 
 //Code Here
-
-
+inner();
 
 ////////// PROBLEM 2 //////////
 
 // Do not edit the code below.
 function callFriend(name) {
   function dial(number) {
-    return 'Calling ' + name + ' at ' + number
+    return "Calling " + name + " at " + number;
   }
   return dial;
 }
@@ -52,8 +50,8 @@ function callFriend(name) {
 */
 
 //Code Here
-
-
+const callJake = callFriend("Jake");
+callJake();
 
 ////////// PROBLEM 3 //////////
 
@@ -62,24 +60,30 @@ function callFriend(name) {
 */
 
 //Code Here
+function makeCounter() {
+  var num = 0;
+  return function() {
+    num += 1;
 
-
+    return num;
+  };
+}
 
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
-
-
+var count = makeCounter();
+count(); // 1
+count(); // 2
+count(); // 3
+count(); // 4
 
 ////////// PROBLEM 4 //////////
 
 /*
   Inside the function called counterFactory return two functions that implement up/down counter.
-  The first function is called inc, this function is responsible for incrementing the value once and returning the updated value.
-  The second function is called dec, this function is responsible for decrementing the value by one and returning the updated value.
+  The first function is called inc, this function is responsible for incrementing the value once and returning 
+  the updated value.
+  The second function is called dec, this function is responsible for decrementing the value by one and 
+  returning the updated value.
   You will need to use the module pattern to achieve this.
   Information on the module pattern available here: 
   http://stackoverflow.com/questions/17776940/javascript-module-pattern-with-example?answertab=votes#tab-top
@@ -87,9 +91,15 @@ function callFriend(name) {
 
 function counterFactory(value) {
   // Code here.
+  var counter = value;
 
   return {
-
+    inc: function() {
+      counter += 1;
+    },
+    dec: function() {
+      counter -= 1;
+    }
   };
 }
 
@@ -99,28 +109,31 @@ counter = counterFactory(10);
 // counter.inc() // 13
 // counter.dec() // 12
 
-
-
 ////////// PROBLEM 5 //////////
 
 /*
-  Inside the motivation function create another function called message that will return the welcome text with the firstname and lastname.
+  Inside the motivation function create another function called message that will return the welcome text 
+  with the firstname and lastname.
   The final message should say "You're doing awesome, keep it up firstname lastname." 
   (Hint: don't forget to have a space between the firstname and lastname and a period at the end of the sentence.)
 */
 
-function motivation( firstname, lastname ) {
+function motivation(firstname, lastname) {
   var welcomeText = "You're doing awesome, keep it up";
 
   // code message function here.
+  function message() {
+    return {
+      welcomeText: firstname,
+      lastname
+    };
+  }
 
   //Uncommment this to return the value of your message function
   //return message;
 }
 
-var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
-
-
+var greeting = motivation("Billy", "Bob"); // 'You're doing awesome keep it up Billy Bob.
 
 ////////// PROBLEM 6 //////////
 
@@ -136,8 +149,15 @@ var module = (function() {
     location: "Utah"
   };
 
-  function privateMethod(){
-    return "Hi, I'm " + person.name + ", age " + person.age + " from " + person.location;
+  function privateMethod() {
+    return (
+      "Hi, I'm " +
+      person.name +
+      ", age " +
+      person.age +
+      " from " +
+      person.location
+    );
   }
 
   // Anything that is being returned is made public and can be invoked from
@@ -146,8 +166,6 @@ var module = (function() {
     // Code here.
   };
 })();
-
-
 
 ////////// PROBLEM 7 //////////
 
@@ -166,10 +184,8 @@ function secretNumber() {
   };
 }
 
-
-
 ////////// PROBLEM 8 //////////
-  
+
 /*
   Here we have a for loop that will iterate as long as i is less than or equal to 5.
   What we need to do is console.log(i) so that it logs like so:
@@ -180,7 +196,8 @@ function secretNumber() {
     4 seconds after call - log 4
     5 seconds after call - log 5
 
-  However, because each call to console.log occurs after the loop has finished, the value of i has changed before the console.log executes.
+  However, because each call to console.log occurs after the loop has finished, the value of i has changed 
+  before the console.log executes.
   We'll need to use a closure to preserve a reference to i at the time of execution.
   
   Fix the code below to log the desired output.
