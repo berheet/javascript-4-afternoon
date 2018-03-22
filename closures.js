@@ -90,24 +90,21 @@ count(); // 4
 */
 
 function counterFactory(value) {
-  // Code here.
-  var counter = value;
-
   return {
-    inc: function() {
-      counter += 1;
+    inc() {
+      return (value += 1);
     },
-    dec: function() {
-      counter -= 1;
+    dec() {
+      return (value -= 1);
     }
   };
 }
 
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
+counter.inc(); // 11
+counter.inc(); // 12
+counter.inc(); // 13
+counter.dec(); // 12
 
 ////////// PROBLEM 5 //////////
 
@@ -119,18 +116,11 @@ counter = counterFactory(10);
 */
 
 function motivation(firstname, lastname) {
-  var welcomeText = "You're doing awesome, keep it up";
-
-  // code message function here.
-  function message() {
-    return {
-      welcomeText: firstname,
-      lastname
-    };
-  }
-
-  //Uncommment this to return the value of your message function
-  //return message;
+  const welcomeText = "You're doing awesome, keep it up";
+  return function() {
+    const message = `${welcomeText} ${firstname} ${lastname}.`;
+    return message;
+  };
 }
 
 var greeting = motivation("Billy", "Bob"); // 'You're doing awesome keep it up Billy Bob.
@@ -142,30 +132,27 @@ var greeting = motivation("Billy", "Bob"); // 'You're doing awesome keep it up B
   Invoke this by calling module.publicMethod(); outside the module scope
 */
 
-var module = (function() {
-  var person = {
+const module = (function() {
+  const person = {
     name: "phillip",
     age: 29,
     location: "Utah"
   };
 
   function privateMethod() {
-    return (
-      "Hi, I'm " +
-      person.name +
-      ", age " +
-      person.age +
-      " from " +
-      person.location
-    );
+    return `Hi, I'm ${person.name}, age ${person.age} from ${person.location}`;
   }
 
   // Anything that is being returned is made public and can be invoked from
   // outside our lexical scope
   return {
-    // Code here.
+    publicMethod() {
+      return privateMethod();
+    }
   };
 })();
+
+module.publicMethod();
 
 ////////// PROBLEM 7 //////////
 
@@ -181,6 +168,12 @@ function secretNumber() {
 
   return {
     // Code here
+    addToSecret(num1) {
+      return (secret += num1);
+    },
+    takeAwayFromSecret(num2) {
+      return (secret -= num2);
+    }
   };
 }
 
@@ -204,7 +197,7 @@ function secretNumber() {
 */
 
 function timeOutCounter() {
-  for (var i = 0; i <= 5; i++) {
+  for (let i = 0; i <= 5; i++) {
     setTimeout(function() {
       console.log(i);
     }, i * 1000);
